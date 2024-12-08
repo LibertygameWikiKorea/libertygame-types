@@ -23,7 +23,7 @@
 	"homepage": "https://github.com/hsl0/libertygame-types#readme",
 	"main": "index.js",
 	"dependencies": {
-		"types-mediawiki": "^1.8.0"
+		"types-mediawiki": "^1.9.0"
 	},
 	"devDependencies": {
 		"markdownlint-cli": "^0.41.0",
