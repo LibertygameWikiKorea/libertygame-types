@@ -4,6 +4,7 @@
 
 [![NPM Version](https://img.shields.io/npm/v/%40libertygame%2Ftypes)](https://www.npmjs.com/package/@libertygame/types)
 [![License](https://img.shields.io/npm/l/%40libertygame%2Ftypes)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+[![Last commit](https://img.shields.io/github/last-commit/LibertygameWikiKorea/libertygame-types/main)](https://github.com/LibertygameWikiKorea/libertygame-types)
 [![Issues](https://img.shields.io/github/issues/LibertygameWikiKorea/libertygame-types)](https://github.com/LibertygameWikiKorea/libertygame-types/issues)
 [![Pull Requests](https://img.shields.io/github/issues-pr/LibertygameWikiKorea/libertygame-types)](https://github.com/LibertygameWikiKorea/libertygame-types/pulls)
 [![Node.js CI](https://github.com/LibertygameWikiKorea/libertygame-types/actions/workflows/node.js.yml/badge.svg)](https://github.com/LibertygameWikiKorea/libertygame-types/actions/workflows/node.js.yml)
