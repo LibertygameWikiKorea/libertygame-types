@@ -1,7 +1,7 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
-name: Bump NPM version
+name: Release NPM version
 
 on:
   workflow_dispatch:
@@ -38,6 +38,8 @@ jobs:
   bump:
     needs: test
     runs-on: ubuntu-latest
+    outputs:
+      npmVersion: ${{ steps.npmVersion.outputs.npmVersion }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -55,7 +57,8 @@ jobs:
           npm ci
           npm audit
       - name: Bumping npm version
-        run: npm version $VERSION_TYPE -m "$COMMIT_MSG"
+        id: npmVersion
+        run: echo 'npmVersion=$(npm version $VERSION_TYPE -m "$COMMIT_MSG")' >> "$GITHUB_OUTPUT"
         env:
           VERSION_TYPE: ${{ inputs.customVersion || inputs.versionType }}
           COMMIT_MSG: ${{ inputs.commitMessage }}
@@ -64,15 +67,27 @@ jobs:
           git push
           git push --tags
 
-  pr:
+  merge:
     if: ${{ github.event.repository.default_branch != github.ref_name  }}
     needs: bump
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.repository.default_branch }}
           fetch-depth: 0
-      - run: git pull
-      - run: gh pr create --fill-verbose
+      - run: git fetch
+      - run: git merge ${{ github.ref_name }}
+      - run: git push
+
+  release:
+    needs: bump
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+      - run: gh release create $TAG --generate-notes
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: v${{ needs.bump.outputs.npmVersion }}
