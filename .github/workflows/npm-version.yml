@@ -15,6 +15,9 @@ on:
           - major
           - minor
           - patch
+      customVersion:
+        description: 'Custom Version'
+        required: false
       commitMessage:
         description: 'Commit Message'
         required: false
@@ -54,7 +57,7 @@ jobs:
       - name: Bumping npm version
         run: npm version $VERSION_TYPE -m "$COMMIT_MSG"
         env:
-          VERSION_TYPE: ${{ inputs.versionType }}
+          VERSION_TYPE: ${{ inputs.customVersion || inputs.versionType }}
           COMMIT_MSG: ${{ inputs.commitMessage }}
       - name: Push to GitHub
         run: |
