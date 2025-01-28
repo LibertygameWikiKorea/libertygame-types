@@ -23,9 +23,9 @@ on:
         description: 'Commit By'
         type: choice
         required: true
-        default: ${{ github.actor }}
+        default: me
         options:
-          - ${{ github.actor }}
+          - me
           - github-actions[bot]
 
 jobs:
@@ -45,7 +45,7 @@ jobs:
           git config --global user.name "$USER_NAME"
           git config --global user.email "$USER_EMAIL"
         env:
-          USER_NAME: ${{ inputs.commitBy }}
+          USER_NAME: ${{ inputs.commitBy == 'me' && github.actor_id || inputs.commitBy }}
           USER_EMAIL: ${{ inputs.commitBy == 'github-actions[bot]' && 'github-actions[bot]@users.noreply.github.com' || format('{0}+{1}@users.noreply.github.com', github.actor_id, github.actor) }}
       - name: Preparing package
         run: |
