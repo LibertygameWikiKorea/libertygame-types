@@ -9,7 +9,7 @@ on:
       versionType:
         description: 'Version Type'
         type: choice
-        required: true
+        required: false
         default: 'minor'
         options:
           - major
