@@ -65,7 +65,7 @@ jobs:
           git push --tags
 
   pr:
-    if: ${{ github.event.repository.default_branch != github.ref }}
+    if: ${{ github.event.repository.default_branch != github.ref_name  }}
     needs: bump
     runs-on: ubuntu-latest
     steps:
