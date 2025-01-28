@@ -6,15 +6,23 @@ name: Publish NPM package
 on:
   workflow_dispatch:
   workflow_call:
+    inputs:
+      skipTest:
+        description: 'Skip test job (only if done before)'
+        type: boolean
+        default: false
+        required: false
 
 jobs:
   test:
     name: Testing package
+    if: ${{ !inputs.skipTest }}
     uses: ./.github/workflows/node.js.yml
 
   publish:
     name: Publish to NPM registry
     needs: test
+    if: ${{ !failure() }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

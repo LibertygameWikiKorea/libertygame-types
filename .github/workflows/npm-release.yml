@@ -37,7 +37,7 @@ jobs:
     uses: ./.github/workflows/node.js.yml
 
   bump:
-    name: Bumping version and create git tag
+    name: Bump package version and create git tag
     needs: test
     runs-on: ubuntu-latest
     outputs:
@@ -58,7 +58,7 @@ jobs:
         run: |
           npm ci
           npm audit
-      - name: Bumping npm version
+      - name: Bump package version
         id: npmVersion
         run: |
           NPM_PACKAGE_VERSION=$(npm version $VERSION_TYPE -m "$COMMIT_MSG")
@@ -107,3 +107,5 @@ jobs:
     needs: [bump, merge]
     if: ${{ !failure() }}
     uses: ./.github/workflows/npm-publish.yml
+    with:
+      skipTest: true
