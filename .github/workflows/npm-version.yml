@@ -19,6 +19,14 @@ on:
         description: 'Commit Message'
         required: false
         default: 'Release version %s'
+      commitBy:
+        description: 'Commit By'
+        type: choice
+        required: true
+        default: ${{ github.actor }}
+        options:
+          - ${{ github.actor }}
+          - github-actions[bot]
 
 jobs:
   test:
@@ -37,8 +45,8 @@ jobs:
           git config --global user.name "$USER_NAME"
           git config --global user.email "$USER_EMAIL"
         env:
-          USER_NAME: gitHub-actions[bot]
-          USER_EMAIL: github-actions[bot]@users.noreply.github.com
+          USER_NAME: ${{ inputs.commitBy }}
+          USER_EMAIL: ${{ inputs.commitBy == 'github-actions[bot]' && 'github-actions[bot]@users.noreply.github.com' || format('{0}+{1}@users.noreply.github.com', github.actor_id, github.actor) }}
       - name: Preparing package
         run: |
           npm ci
@@ -52,6 +60,7 @@ jobs:
         run: |
           git push
           git push --tags
+
   pr:
     if: ${{ github.event.repository.default_branch != github.ref }}
     needs: bump
@@ -61,14 +70,6 @@ jobs:
         with:
           fetch-depth: 0
       - run: git pull
-      - run: git status
-      - run: git log HEAD~1..HEAD
-      - run: git log $ORIGIN_MAIN~1..$ORIGIN_MAIN
-        env:
-          ORIGIN_MAIN: origin/${{ github.event.repository.default_branch }}
-      - run: git log $ORIGIN_MAIN...HEAD
-        env:
-          ORIGIN_MAIN: origin/${{ github.event.repository.default_branch }}
       - run: gh pr create --fill-verbose
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
