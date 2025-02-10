@@ -117,5 +117,5 @@ jobs:
     uses: './.github/workflows/release-tag.yml'
     with:
       tag: ${{ needs.bump.outputs.version }}
-      draft: ${{ !inputs.autoRelease }}
+      draft: ${{ !inputs.autoRelease || !inputs.autoMerge }}
       skipTest: true
