@@ -45,6 +45,10 @@ on:
         type: boolean
         default: true
 
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
   test:
     name: Testing package
