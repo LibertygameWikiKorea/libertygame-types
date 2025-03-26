@@ -68,5 +68,6 @@ jobs:
     uses: './.github/workflows/npm-publish.yml'
     with:
       skipTest: true
+      ref: ${{ inputs.tag || github.ref_name }}
     secrets:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
