@@ -64,3 +64,5 @@ jobs:
     uses: './.github/workflows/npm-publish.yml'
     with:
       skipTest: true
+    secrets:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
