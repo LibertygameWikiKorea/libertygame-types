@@ -16,6 +16,10 @@ on:
         type: boolean
         default: false
         required: false
+      ref:
+        description: 'Git ref to publish'
+        type: string
+        required: false
     secrets:
       NPM_TOKEN:
         description: 'NPM access token for publishing to npm registry'
@@ -37,6 +41,8 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.ref }}
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
