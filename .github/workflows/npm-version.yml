@@ -125,3 +125,5 @@ jobs:
       tag: ${{ needs.bump.outputs.version }}
       draft: ${{ !inputs.autoRelease || !inputs.autoMerge }}
       skipTest: true
+    secrets:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
