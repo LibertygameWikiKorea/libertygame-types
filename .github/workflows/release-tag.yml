@@ -19,6 +19,10 @@ on:
         type: boolean
         default: false
         required: false
+    secrets:
+      NPM_TOKEN:
+        description: 'NPM access token for publishing to npm registry'
+        required: false
 
 jobs:
   test:
