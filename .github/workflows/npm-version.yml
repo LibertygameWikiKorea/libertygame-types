@@ -109,7 +109,7 @@ jobs:
         run: gh pr create --fill-verbose
       - name: Forced merge
         if: ${{ inputs.autoMerge }}
-        run: gh pr merge --rebase --admin --delete-branch --match-head-commit ${{ steps.commitSHA.outputs.commitSHA }}
+        run: gh pr merge --admin --delete-branch --match-head-commit ${{ steps.commitSHA.outputs.commitSHA }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Push tag
