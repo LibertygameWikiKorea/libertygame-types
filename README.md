@@ -1,4 +1,4 @@
-![리버티게임 로고](https://libertyga.me/wiki/Special:Redirect/file/Libertygame_logo.svg)
+![리버티게임 로고](https://libertygame.work/wiki/Special:Redirect/file/Libertygame_logo.svg)
 
 # 리버티게임 타입스크립트 타입 정의
 
