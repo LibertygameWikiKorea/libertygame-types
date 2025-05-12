@@ -104,14 +104,7 @@ jobs:
           echo "$COMMIT_SHA"
           echo "commitSHA=${COMMIT_SHA}" >> $GITHUB_OUTPUT
       - name: Push commit
-        run: git push origin release -u --force
-      - name: Create Pull Request
-        run: gh pr create --fill-verbose
-      - name: Forced merge
-        if: ${{ inputs.autoMerge }}
-        run: gh pr merge --rebase --admin --delete-branch --match-head-commit ${{ steps.commitSHA.outputs.commitSHA }}
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: git push
       - name: Push tag
         if: ${{ inputs.createTag }}
         run: git push --tags
